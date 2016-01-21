@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Gerenciador M&iacute;dia TV</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link rel="stylesheet" href="../css/login.css" type="text/css" media="screen"/>
+        <link href="../js/alert/css/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+		<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="../js/alert/scripts/jquery.alerts.js"></script>
+        <link rel="shortcut icon" href="../images/tv.ico" type="image/x-icon"/>
+    </head>
+    <body>
+        <div id="page">
+            <h1>Gerenciador M&iacute;dia TV</h1>
+            <div id="center">
+                <div id="login">
+		           
+                    <form id='form_login' class='form_login' method="POST" action="/auth/login">
+                        <fieldset class="logar">
+                            <legend>&Aacute;rea Restrita</legend>
+                            <p>
+                                <label for="login">Login</label>
+                                <input id="login" name="arrDataForm[ds_login]" />
+                            </p>
+                            <p>
+                                <label for="senha">Senha</label>
+                                <input id="senha" name="arrDataForm[ds_senha]" type="password" AUTOCOMPLETE=OFF />
+                            </p>
+                            <p class="submit">
+                                <button id="acao" name="acao" value="logar" type="submit">logar</button>
+                            </p>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+		<div id="response"></div>
+    </body>
+</html>
+<?php if(isset($_GET['msg'])){ ?>
+<script type="text/javascript">
+	$(document).ready( function() {
+		jAlert('<?php print $_GET['msg']; ?>', 'Area Restrita');
+	});
+</script>
+<?php } ?>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <title>Enquete</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Enquete">
+        <meta name="author" content="Andre">
+		
+		<script src='/js/jquery-1.7.1.min.js'></script>
+		
+        <!-- Stylesheets -->
+        <style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			h3 {
+				font-size: 21px;
+				font-family: "Raleway","Open Sans",Arial,sans-serif;
+				font-weight: 800;
+				color: #4682B4;
+				line-height: 24px;
+				margin-bottom: 25px;
+				margin-top: 0;
+				text-transform: uppercase;
+			}
+			h3 a{
+				font-size: 21px;
+				font-family: "Raleway","Open Sans",Arial,sans-serif;
+				font-weight: 800;
+				color: #4682B4;
+				line-height: 24px;
+				margin-bottom: 25px;
+				margin-top: 0;
+				text-transform: uppercase;
+			}
+			fieldset {
+				border: 0 none;
+				font: inherit;
+				margin: 0;
+				padding: 0;
+				vertical-align: baseline;
+			}
+			td {
+				border: 1px solid #C1DAD7;
+				background: #fff;
+				padding: 2px;
+				color: #4f6b72;
+			}
+			label {
+				color: #4f6b72;
+			}
+			.formEnvio {
+				margin-top: 5%;
+				margin-left: 20%;
+				width: 50%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			.text {
+				background: #fff none repeat scroll 0 0;
+				border: 1px solid #ddd;
+				border-radius: 3px;
+				box-sizing: border-box;
+				padding: 8px 15px;
+				width: 100%;
+			}
+			.botao {
+				border: medium none;
+				border-radius: 25px;
+				color: #fff;
+				float: right;
+				font-size: 13px;
+				font-weight: 700;
+				padding: 13px 40px;
+				text-transform: uppercase;
+				transition: all 0.2s ease 0s;
+				background-color: #006db7;
+				cursor: pointer;
+			}
+			.formEnvio fieldset {
+				margin-bottom: 15px;
+			}
+			.required {
+				color: #ce292d;
+			}
+        </style>
+		
+	</head>
+	
+    <body>
+        <div class="conteudo">
+			<div class="formEnvio">
+				<div class="enquete1">
+				
+					<form id="formCadastro" action="/index/enquete" method="POST">
+						<?php if( $this->arrEnquete ){ ?>
+							<?php foreach( $this->arrEnquete as $k => $value ){ ?>
+								<div class="formTitulo">
+									<h3><a href="/index/enquete/id/<?php echo $value[$k]["id_enquete"]; ?>" alt="Responder enquete"><?php echo $value[0]["no_titulo"]; ?></a></h3>
+								</div>
+								
+								<?php foreach( $value as $kp => $valuep ){ ?>
+									<fieldset>
+										<label>
+											<?php echo $value[$kp]["no_pergunta"]; ?>?
+										</label>
+
+										<p>
+											<table align="center" width="100%" cellpadding="0" cellspacing="0" border="0">
+												<?php foreach( $value[$kp]["respostas"] as $kr => $valuer ){
+													if( $valuer["total_desta_resposta"] != 0 AND $valuer["total_desta_resposta"] != "" ){
+														$percentual = 100/$valuer["total_respostas"]*$valuer["total_desta_resposta"]; 
+													}else{
+														$percentual = 0;
+													}
+													?>
+													<tbody>
+														<tr>
+															<td>
+																<input type="hidden" name="arrResultado[<?php echo $kp; ?>][id_enquete]" value="<?php echo $value[$k]["id_enquete"]; ?>"/>
+																<input type="hidden" name="arrResultado[<?php echo $kp; ?>][id_pergunta]" value="<?php echo $value[$kp]["id_pergunta"]; ?>"/>
+																<?php echo $valuer["no_resposta"]; ?>
+															</td>
+															<td width="10%">
+																<?php echo number_format($percentual, "2", ",", "." ) . "%"; ?>
+															</td>
+														</tr>
+													</tbody>
+												<?php } ?>
+											</table>
+										</p>
+									</fieldset>
+								<?php } ?>
+							
+							<?php } ?>
+							
+						<?php } ?>
+					</form>
+				</div>	
+			</div>	
+		</div>
+	</body>
+</html>

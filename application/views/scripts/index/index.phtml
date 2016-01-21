@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <title>Enquete</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="Enquete">
+        <meta name="author" content="Andre">
+		
+		<script src='/js/jquery-1.7.1.min.js'></script>
+		<script src='/js/jquery.validate.js'></script>
+		
+        <!-- Stylesheets -->
+        <style>
+			body{
+				margin: 0;
+				padding: 0;
+			}
+			h3 {
+				font-size: 21px;
+				font-family: "Raleway","Open Sans",Arial,sans-serif;
+				font-weight: 800;
+				color: #4682B4;
+				line-height: 24px;
+				margin-bottom: 25px;
+				margin-top: 0;
+				text-transform: uppercase;
+			}
+			fieldset {
+				border: 0 none;
+				font: inherit;
+				margin: 0;
+				padding: 0;
+				vertical-align: baseline;
+			}
+			td {
+				border: 1px solid #C1DAD7;
+				background: #fff;
+				padding: 2px;
+				color: #4f6b72;
+			}
+			label {
+				color: #4f6b72;
+			}
+			.formEnvio {
+				margin-top: 5%;
+				margin-left: 20%;
+				width: 50%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			.text {
+				background: #fff none repeat scroll 0 0;
+				border: 1px solid #ddd;
+				border-radius: 3px;
+				box-sizing: border-box;
+				padding: 8px 15px;
+				width: 100%;
+			}
+			.botao {
+				border: medium none;
+				border-radius: 25px;
+				color: #fff;
+				float: right;
+				font-size: 13px;
+				font-weight: 700;
+				padding: 13px 40px;
+				text-transform: uppercase;
+				transition: all 0.2s ease 0s;
+				background-color: #006db7;
+				cursor: pointer;
+			}
+			.botao1 {
+				border: medium none;
+				border-radius: 25px;
+				color: #fff;
+				float: right;
+				font-size: 13px;
+				font-weight: 700;
+				padding: 13px 40px;
+				text-transform: uppercase;
+				transition: all 0.2s ease 0s;
+				background-color: #B0C4DE;
+				cursor: pointer;
+			}
+			.botao2 {
+				border: medium none;
+				border-radius: 25px;
+				color: #fff;
+				float: right;
+				font-size: 13px;
+				font-weight: 700;
+				padding: 13px 40px;
+				text-transform: uppercase;
+				transition: all 0.2s ease 0s;
+				background-color: #4682B4;
+				cursor: pointer;
+			}
+			.formEnvio fieldset {
+				margin-bottom: 15px;
+			}
+			.required .error {
+				color: #ce292d;
+			}
+			.error {
+				color: #ce292d !important;
+			}
+        </style>
+	</head>
+	
+    <body>
+        <div class="conteudo">
+			<div class="formEnvio">
+				<div class="formTitulo">
+					<h3>Cadastro de Enquete</h3>
+				</div>
+				<div class="enquete1">
+					<form id="formCadastro" name="formCadastro" action="/index" method="POST">
+						<fieldset>
+							<label>
+								<span class="required">*</span> T&iacute;tulo:
+							</label>
+
+							<input type="text" class="text required" id="titulo" name="arrEnquete[no_titulo]">
+						</fieldset>
+						
+						<fieldset>
+							<label>
+								<button type="button" id="btn" onclick="addpergunta();" class="botao1">Adicionar Pergunta</button>
+							</label>
+
+						</fieldset>
+						
+						<fieldset id="perguntas"></fieldset>
+						
+						<input type="submit" class="botao" value="SALVAR">
+					</form>
+				</div>	
+			</div>	
+		</div>
+	</body>
+</html>
+
+<script>
+	var cont 	= 0;
+	var cont2 	= 0;
+	var input 	= "";
+	var input2 	= "";
+	
+	/* adiciona perguntas */
+	function addpergunta(){
+		cont++;	
+		input = "";
+		input += "<table align='center' width='100%' cellpadding='0' cellspacing='0' border='0'>";
+			input += "<tbody>";
+				input += "<tr>";
+					input += "<td>";
+						input += "<fieldset>";
+							input += "<i class='idz-icon-cancel-circle' style='margin:5px; cursor: pointer;'><font color='red'>(X Remover Pergunta "+cont+")</font></i><br/>";
+							input += "<label>";
+								input += "<span class='required'>*</span> Pergunta "+cont+":";
+							input += "</label>";
+								input += "<input type='text' class='text required' id='pergunta' name='arrEnquete[pergunta"+cont+"][pergunta]'>";
+							input += "<label>";
+								input += "<span class='required'>*</span> Resposta:";
+							input += "</label>";
+							input += "<input type='text' class='text required' id='resposta' name='arrEnquete[pergunta"+cont+"][resposta][]'>";
+							input += "<fieldset id='respostas"+cont+"'></fieldset>";
+							input += "<fieldset>";
+								input += "<label>";
+									input += "<button type='button' id='btn_"+cont+"' onclick='addresposta("+cont+");' name='addResp' class='botao2'>Adicionar Resposta</button>";
+								input += "</label>";
+							input += "</fieldset>";
+						input += "</fieldset>";
+					input += "</td>";
+				input += "</tr>";
+			input += "</tbody>";
+		input += "</table>";
+			
+		$('#perguntas').append( input );
+	}
+	
+	/* apaga a pergunta adicionada */
+	$('#perguntas').delegate('i','click',function( e ){
+		e.preventDefault();
+		$( this ).parent('fieldset').remove();
+	});
+	
+	/* adiciona respostas */
+	function addresposta( idpr ){
+		cont2++;	
+		input2 = "";
+		input2 += "<fieldset>";
+			input2 += "<i class='idz-icon-cancel-circle' style='margin:5px; cursor: pointer;'>(<font color='red'>X</font> Remover Resposta)</i><br/>";
+			input2 += "<label>";
+				input2 += "<span class='required'>*</span> Resposta:";
+				input2 += "</label>";
+				input2 += "<input type='text' class='text required' id='resposta' name='arrEnquete[pergunta"+idpr+"][resposta][]'>";
+		input2 += "</fieldset>";
+			
+			
+		$('#respostas'+idpr).append( input2 );
+		
+		/* apaga a resposta adicionada */
+		$('#perguntas'+idpr).delegate('i','click',function( e ){
+			e.preventDefault();
+			$( this ).parent('fieldset').remove();
+		});
+	}
+	
+	$('#formCadastro').validate();
+	
+</script>

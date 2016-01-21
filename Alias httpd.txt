@@ -1,0 +1,16 @@
+#################### enquete
+
+Listen 1031
+Alias /enquete "c:/wamp/www/enquete/public"
+<VirtualHost *:1031>
+DocumentRoot "c:/wamp/www/enquete/public"
+ServerName enquete
+SetEnv APPLICATION_ENV "production"
+       <Directory c:/wamp/www/enquete/public>
+               DirectoryIndex index.php
+               AllowOverride All
+               Order allow,deny
+               Allow from all
+       </Directory>
+
+</VirtualHost>
